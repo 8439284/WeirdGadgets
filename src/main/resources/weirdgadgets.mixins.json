@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.ajls.weirdgadgets.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "weirdgadgets.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

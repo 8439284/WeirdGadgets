@@ -64,7 +64,8 @@ public class MoonwormQueenCompass extends Item {
                         for (int i = 0; i < chest.getContainerSize(); i++) {
                             ItemStack itemStack = chest.getItem(i);
                             Item item = itemStack.getItem();
-                            if (item.equals(moonworm_queen) || item.equals(net.minecraft.world.item.Items.DIAMOND) || item.equals(net.minecraft.world.item.Items.IRON_INGOT) || item.equals(Items.GOLD_INGOT)) {  //net.minecraft.world.item.Items.DIAMOND  moonworm_queen  //itemStack.getItem().equals(Items.IRON_INGOT) || itemStack.getItem().equals(Items.GOLD_INGOT)
+                            if (item.equals(moonworm_queen)) {  //net.minecraft.world.item.Items.DIAMOND  moonworm_queen  //itemStack.getItem().equals(Items.IRON_INGOT) || itemStack.getItem().equals(Items.GOLD_INGOT)
+                                // || item.equals(net.minecraft.world.item.Items.DIAMOND) || item.equals(net.minecraft.world.item.Items.IRON_INGOT) || item.equals(Items.GOLD_INGOT)
                                 foundDiamonds = true;
                                 player.sendSystemMessage(Component.literal(
                                         "Chest with " + itemStack.getHoverName().getString() + " found at: " + x + ", " + y + ", " + z

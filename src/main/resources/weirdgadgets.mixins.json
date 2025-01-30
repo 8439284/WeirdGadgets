@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "weirdgadgets.refmap.json",
   "mixins": [
-    "MixinRandomizableContainerBlockEntity"
+    "MixinRandomizableContainerBlockEntity",
+    "MixinChestLidController",
+    "MixinChestBlockEntity"
   ],
   "client": [
   ],

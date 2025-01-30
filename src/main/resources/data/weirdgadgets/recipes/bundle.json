@@ -2,14 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "#S#",
-    "#A#",
-    "###"
+    " S ",
+    " A ",
+    "   "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:air"
-    },
     "A": {
       "item": "minecraft:leather"
     },

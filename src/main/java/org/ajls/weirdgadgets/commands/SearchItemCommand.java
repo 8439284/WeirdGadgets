@@ -5,11 +5,9 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
@@ -17,17 +15,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.storage.loot.LootTable;
-import org.ajls.weirdgadgets.advanced.RandomizableContainerBlockEntityAdvanced;
 import org.ajls.weirdgadgets.mixin.MixinRandomizableContainerBlockEntity;
+import org.ajls.weirdgadgets.renderer.ContainerRenderer;
+import org.ajls.weirdgadgets.utils.ChestBlockEntityUtils;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class SearchItemCommand {
     private static final int SEARCH_RADIUS = 50;
+    public static HashSet<ChestBlockEntity> foundedChests = new HashSet<>();
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("search")  //neoforge_check_name
@@ -66,121 +66,58 @@ public class SearchItemCommand {
                                     BlockPos playerPos = player.blockPosition();
                                     String specifiedName = StringArgumentType.getString(context, "name");
                                     boolean foundDiamonds = false;
+                                    ContainerRenderer.container_displayItems.clear();
+                                    for (ChestBlockEntity chest : foundedChests) {
+                                        ChestBlockEntityUtils.setOpenness(chest, 0);
+                                        chest.chestLidController.openness = 0;
+                                    }
                                     for (int x = playerPos.getX() - SEARCH_RADIUS; x <= playerPos.getX() + SEARCH_RADIUS; x++) {
                                         for (int z = playerPos.getZ() - SEARCH_RADIUS; z <= playerPos.getZ() + SEARCH_RADIUS; z++) {
                                             for (int y = playerPos.getY() - SEARCH_RADIUS; y <= playerPos.getY() + SEARCH_RADIUS; y++) {
                                                 BlockPos searchPos = new BlockPos(x, y, z);
                                                 BlockEntity blockEntity = level.getBlockEntity(searchPos);
-//                                                if (blockEntity instanceof BaseContainerBlockEntity) {
-//                                                    BaseContainerBlockEntity container = (BaseContainerBlockEntity) blockEntity;
-//                                                    if (container.)
-//                                                }
                                                 boolean foundInThisChest = false;
-                                                boolean canRandomize = false;
                                                 int matchCount = 0;
                                                 if (blockEntity instanceof BaseContainerBlockEntity container) {
-//                                                    RandomizableContainerBlockEntity test = null;
                                                     if (blockEntity instanceof RandomizableContainerBlockEntity chest) {  //RandomizableContainerBlockEntity
                                                         ResourceLocation lootTable = ((MixinRandomizableContainerBlockEntity) chest).getLootTable();
                                                         if (lootTable != null) {continue;}
-
-                                                        CompoundTag nbtData = chest.saveWithFullMetadata();
-//                                                        RandomizableContainerBlockEntityAdvanced chestAdvanced = (RandomizableContainerBlockEntityAdvanced) chest;
-//                                                        if (chestAdvanced.getLootTable() != null)  continue;
-
-//                                                        test = new chest.cl(chest.getType(), chest.getBlockPos(), chest.getBlockState()) {
-//                                                            @Override
-//                                                            protected NonNullList<ItemStack> getItems() {
-//                                                                return null;
-//                                                            }
-//
-//                                                            @Override
-//                                                            protected void setItems(NonNullList<ItemStack> p_59625_) {
-//
-//                                                            }
-//
-//                                                            @Override
-//                                                            protected Component getDefaultName() {
-//                                                                return null;
-//                                                            }
-//
-//                                                            @Override
-//                                                            protected AbstractContainerMenu createMenu(int p_58627_, Inventory p_58628_) {
-//                                                                return null;
-//                                                            }
-//                                                        };
-//                                                        test.load(nbtData);
-                                                        canRandomize = true;
-                                                        Field field = null;
-                                                        ResourceKey<LootTable> lootTableKey = null;
-                                                        boolean checked = false;
-//                                                        Field[] fields = RandomizableContainerBlockEntity.class.getDeclaredFields();
-//                                                        for (Field f : fields) {
-//                                                            player.sendSystemMessage(Component.literal(
-//                                                                    f.getDeclaringClass().getName()
-//                                                            ));
-//                                                            player.sendSystemMessage(Component.literal(
-//                                                                    f.getDeclaringClass().toString()
-//                                                            ));
-//                                                            if (f.getDeclaringClass() == ResourceKey.class) {
-//                                                                f.setAccessible(true);
-//                                                                try {
-//                                                                    lootTableKey = (ResourceKey<LootTable>) field.get(chest);
-//                                                                    checked = true;
-//                                                                } catch (IllegalAccessException e) {
-//                                                                    throw new RuntimeException(e);
-//                                                                }
-//                                                            }
-//                                                        }
                                                     }
-
-
-//                                                        try {
-
-//                                                            field = RandomizableContainerBlockEntity.class.getDeclaredField("lootTable");
-
-//                                                        field.setAccessible(true); // Force to access the field
-// Set value
-//                                                        field.set(chest, 0);  //-114514  //32700
-// Get value
-
-
-//                                                        try {
-//                                                            lootTableKey = (ResourceKey<LootTable>) field.get(chest);
-//                                                        } catch (IllegalAccessException e) {
-//                                                            throw new RuntimeException(e);
-//                                                        }
-                                                        //                                                        ResourceKey<LootTable> lootTableKey = chest.unpackLootTable();
-//                                                        if (lootTableKey != null || !checked) continue;
-//                                                    }
-                                                    HashMap<String, Integer> itemStack_amount = new HashMap<>();
+                                                    HashMap<String, Integer> itemStackName_amount = new HashMap<>();
+                                                    HashMap<ItemStack, Integer> itemStack_amount = new HashMap<>();
                                                     for (int i = 0; i < container.getContainerSize(); i++) {
                                                         ItemStack itemStack = container.getItem(i);
                                                         String itemName = itemStack.getHoverName().getString();
                                                         if (itemName.toLowerCase().contains(specifiedName.toLowerCase())) {
                                                             foundDiamonds = true;
                                                             foundInThisChest = true;
-                                                            if (!itemStack_amount.containsKey(itemName)) {
-                                                                itemStack_amount.put(itemName, itemStack.getCount());
+                                                            if (!itemStackName_amount.containsKey(itemName)) {
+                                                                itemStackName_amount.put(itemName, itemStack.getCount());
+                                                                itemStack_amount.put(itemStack, itemStack.getCount());
                                                                 matchCount++;
                                                             }
                                                             else {
-                                                                itemStack_amount.put(itemName, itemStack_amount.get(itemName) + itemStack.getCount());
+                                                                itemStackName_amount.put(itemName, itemStackName_amount.get(itemName) + itemStack.getCount());
                                                             }
                                                         }
                                                     }
-                                                    if (canRandomize) {
-//                                                        level.setBlockEntity(test);
-                                                    }
                                                     if (foundInThisChest) {
+                                                        if (blockEntity instanceof ChestBlockEntity chest) {
+                                                            ChestBlockEntityUtils.setOpenness(chest, 1);
+//                                                            level.setBlockEntity(chest);
+                                                            chest.chestLidController.openness = 1;
+
+                                                            foundedChests.add(chest);
+                                                        }
                                                         player.sendSystemMessage(Component.literal(
                                                                 matchCount + " matches found at: " + x + ", " + y + ", " + z
                                                         ));
-                                                        for (String name : itemStack_amount.keySet()) {
+                                                        for (String name : itemStackName_amount.keySet()) {
                                                             player.sendSystemMessage(Component.literal(
-                                                                    name + ": " + itemStack_amount.get(name)
+                                                                    name + ": " + itemStackName_amount.get(name)
                                                             ));
                                                         }
+                                                        ContainerRenderer.container_displayItems.put(container, itemStack_amount);
                                                     }
                                                 }
                                             }

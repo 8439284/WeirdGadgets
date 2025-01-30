@@ -32,6 +32,5 @@ public interface MixinRandomizableContainerBlockEntity {
     @Accessor("lootTable")
     public abstract ResourceLocation getLootTable();
 
-
 //    ResourceKey<LootTable> getLootTable();
 }

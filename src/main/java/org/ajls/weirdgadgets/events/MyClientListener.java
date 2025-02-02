@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -45,7 +47,7 @@ public class MyClientListener {
         if (mc.level == null) return;
         ContainerRenderer containerRenderer = new ContainerRenderer();
         for (BaseContainerBlockEntity baseContainerBlockEntity: ContainerRenderer.container_displayItems.keySet()) {
-            ContainerRenderer.render(baseContainerBlockEntity, poseStack);
+//            ContainerRenderer.render(baseContainerBlockEntity, poseStack);
             //renderContainerText(baseContainerBlockEntity, poseStack, "test");  //ContainerRenderer.container_displayItems.get(baseContainerBlockEntity).get()
         }
 
@@ -100,4 +102,15 @@ public class MyClientListener {
 
         poseStack.popPose();
     }
+
+//    @SubscribeEvent
+//    public void renderTick(TickEvent.RenderTickEvent event) {
+//        if (event.phase == TickEvent.Phase.START || renderManager.getFontRenderer() == null) {
+//            return;
+//        }
+//        Minecraft mc = Minecraft.getInstance();
+//        Entity viewEntity = mc.getRenderViewEntity();
+//        EntityRenderer.drawNameplate(renderManager.getFontRenderer(), "text", 0f, 64f, 0f, 0, viewEntity.rotationYaw, viewEntity.rotationPitch, renderManager.options.thirdPersonView == 2, viewEntity.isSneaking());
+//
+//    }
 }

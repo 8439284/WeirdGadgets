@@ -2,6 +2,7 @@ package org.ajls.weirdgadgets.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -10,6 +11,8 @@ import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,10 +20,12 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.phys.Vec3;
 import org.ajls.weirdgadgets.mixin.MixinRandomizableContainerBlockEntity;
 import org.ajls.weirdgadgets.renderer.ContainerRenderer;
 import org.ajls.weirdgadgets.utils.ChestBlockEntityUtils;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -102,6 +107,34 @@ public class SearchItemCommand {
                                                         }
                                                     }
                                                     if (foundInThisChest) {
+
+                                                        Minecraft minecraft = Minecraft.getInstance();
+                                                        Level clientLevel = minecraft.level;
+                                                        if (clientLevel != null) {
+                                                            // Create the armor stand entity
+                                                            ArmorStand armorStand = new ArmorStand(EntityType.ARMOR_STAND, clientLevel);
+
+                                                            armorStand.setPos(new Vec3(searchPos.getX(), searchPos.getY(), searchPos.getX())); // Set position
+
+                                                            // Prevent server sync by making it not persistent
+                                                            armorStand.noPhysics = true;
+                                                            armorStand.setInvisible(false); // Set to visible if needed
+                                                            for (String name : itemStackName_amount.keySet()) {
+                                                                if (armorStand.getCustomName() == null) {
+                                                                    armorStand.setCustomName(Component.nullToEmpty(name));
+                                                                }
+                                                                else {
+                                                                    armorStand.setCustomName(Component.nullToEmpty(armorStand.getCustomName() + "\n" + name));
+                                                                }
+                                                            }
+                                                            armorStand.setCustomNameVisible(true);
+
+
+                                                            // Add to client world
+                                                            clientLevel.addFreshEntity(armorStand);
+                                                        }
+
+
                                                         if (blockEntity instanceof ChestBlockEntity chest) {
                                                             ChestBlockEntityUtils.setOpenness(chest, 1);
 //                                                            level.setBlockEntity(chest);

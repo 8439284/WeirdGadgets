@@ -2,6 +2,7 @@ package org.ajls.weirdgadgets.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
@@ -20,6 +21,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import org.ajls.weirdgadgets.utils.VectorUtils;
 import org.joml.Quaternionf;
 
 import java.util.HashMap;
@@ -58,14 +61,18 @@ public class ContainerRenderer  {  //implements BlockEntityRenderer<BaseContaine
         int index = 0;
         for (ItemStack itemStack : itemStack_Count.keySet()) {
             int count = itemStack_Count.get(itemStack);
-            BlockPos blockPos = blockEntity.getBlockPos().above();
+            BlockPos blockPosAbove = blockEntity.getBlockPos().above();
             for (int i = 0; i < index; i++) {
-                blockPos = blockPos.above();
+                blockPosAbove = blockPosAbove.above();
             }
-            int packedLight2 = LightTexture.pack(level.getBrightness(LightLayer.BLOCK, blockPos), level.getBrightness(LightLayer.SKY, blockPos));
+            int packedLight2 = LightTexture.pack(level.getBrightness(LightLayer.BLOCK, blockPosAbove), level.getBrightness(LightLayer.SKY, blockPosAbove));
 
             poseStack.pushPose();
-            poseStack.translate(0.5, 1.3, 0.5);
+            BlockPos blockPos = blockEntity.getBlockPos() ;
+            Vec3 blockPosVec3 = VectorUtils.toVec3(blockPosAbove);
+            blockPosVec3 = blockPosVec3.subtract( (Minecraft.getInstance().player.position()));
+//            poseStack.translate(0.5, 1.3, 0.5);
+            poseStack.translate(blockPosVec3.x, blockPosVec3.y, blockPosVec3.z);
             Minecraft.getInstance().getItemRenderer().renderStatic(  //context
                     itemStack,
                     ItemDisplayContext.FIXED,
@@ -77,20 +84,20 @@ public class ContainerRenderer  {  //implements BlockEntityRenderer<BaseContaine
                     0
             );
 
-            Font font = Minecraft.getInstance().font;  //context.getFont()
-//            poseStack.translate();
-            font.drawInBatch(
-                    count + "",
-                    0,
-                    0,
-                    0xECECEC,
-                    false,
-                    poseStack.last().pose(),
-                    multiBufferSource,
-                    Font.DisplayMode.NORMAL,
-                    0,
-                    packedLight2
-            );
+//            Font font = Minecraft.getInstance().font;  //context.getFont()
+////            poseStack.translate();
+//            font.drawInBatch(
+//                    count + "",
+//                    0,
+//                    0,
+//                    0xECECEC,
+//                    false,
+//                    poseStack.last().pose(),
+//                    multiBufferSource,
+//                    Font.DisplayMode.NORMAL,
+//                    0,
+//                    packedLight2
+//            );
             poseStack.popPose();
             index++;
         }

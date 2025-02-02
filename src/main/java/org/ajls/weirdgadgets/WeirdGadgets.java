@@ -2,7 +2,6 @@ package org.ajls.weirdgadgets;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -11,7 +10,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.ajls.weirdgadgets.events.MyListener;
 import org.ajls.weirdgadgets.items.ModItems;
-import org.ajls.weirdgadgets.renderer.ContainerRenderer;
+//import org.ajls.weirdgadgets.renderer.ContainerRenderer;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -107,6 +105,7 @@ public class WeirdGadgets {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(EXAMPLE_BLOCK_ITEM);
             event.accept(ModItems.MOONWORM_QUEEN_COMPASS);
+            event.accept(ModItems.PEACOCK_FEATHER_FAN_COMPASS);
         }
     }
 

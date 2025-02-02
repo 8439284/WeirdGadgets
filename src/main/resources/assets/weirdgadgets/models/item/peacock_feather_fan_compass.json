@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "weirdgadgets:item/peacock_feather_fan_compass"
+  }
+}

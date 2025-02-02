@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "#A#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "twilightforest:raven_feather"
+    },
+    "A": {
+      "item": "minecraft:compass"
+    }
+  },
+  "result": {
+    "item": "weirdgadgets:peacock_feather_fan_compass"
+  }
+}

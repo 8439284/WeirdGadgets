@@ -2,7 +2,7 @@ package org.ajls.weirdgadgets.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import net.minecraft.client.Minecraft;
+//import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.ajls.weirdgadgets.mixin.MixinRandomizableContainerBlockEntity;
-import org.ajls.weirdgadgets.renderer.ContainerRenderer;
+//import org.ajls.weirdgadgets.renderer.ContainerRenderer;
 import org.ajls.weirdgadgets.utils.ChestBlockEntityUtils;
 
 import java.awt.*;
@@ -71,7 +71,7 @@ public class SearchItemCommand {
                                     BlockPos playerPos = player.blockPosition();
                                     String specifiedName = StringArgumentType.getString(context, "name");
                                     boolean foundDiamonds = false;
-                                    ContainerRenderer.container_displayItems.clear();
+//                                    ContainerRenderer.container_displayItems.clear();
                                     for (ChestBlockEntity chest : foundedChests) {
                                         ChestBlockEntityUtils.setOpenness(chest, 0);
                                         chest.chestLidController.openness = 0;
@@ -108,31 +108,31 @@ public class SearchItemCommand {
                                                     }
                                                     if (foundInThisChest) {
 
-                                                        Minecraft minecraft = Minecraft.getInstance();
-                                                        Level clientLevel = minecraft.level;
-                                                        if (clientLevel != null) {
-                                                            // Create the armor stand entity
-                                                            ArmorStand armorStand = new ArmorStand(EntityType.ARMOR_STAND, clientLevel);
-
-                                                            armorStand.setPos(new Vec3(searchPos.getX(), searchPos.getY(), searchPos.getX())); // Set position
-
-                                                            // Prevent server sync by making it not persistent
-                                                            armorStand.noPhysics = true;
-                                                            armorStand.setInvisible(false); // Set to visible if needed
-                                                            for (String name : itemStackName_amount.keySet()) {
-                                                                if (armorStand.getCustomName() == null) {
-                                                                    armorStand.setCustomName(Component.nullToEmpty(name));
-                                                                }
-                                                                else {
-                                                                    armorStand.setCustomName(Component.nullToEmpty(armorStand.getCustomName() + "\n" + name));
-                                                                }
-                                                            }
-                                                            armorStand.setCustomNameVisible(true);
-
-
-                                                            // Add to client world
-                                                            clientLevel.addFreshEntity(armorStand);
-                                                        }
+//                                                        Minecraft minecraft = Minecraft.getInstance();
+//                                                        Level clientLevel = minecraft.level;
+//                                                        if (clientLevel != null) {
+//                                                            // Create the armor stand entity
+//                                                            ArmorStand armorStand = new ArmorStand(EntityType.ARMOR_STAND, clientLevel);
+//
+//                                                            armorStand.setPos(new Vec3(searchPos.getX(), searchPos.getY(), searchPos.getX())); // Set position
+//
+//                                                            // Prevent server sync by making it not persistent
+//                                                            armorStand.noPhysics = true;
+//                                                            armorStand.setInvisible(false); // Set to visible if needed
+//                                                            for (String name : itemStackName_amount.keySet()) {
+//                                                                if (armorStand.getCustomName() == null) {
+//                                                                    armorStand.setCustomName(Component.nullToEmpty(name));
+//                                                                }
+//                                                                else {
+//                                                                    armorStand.setCustomName(Component.nullToEmpty(armorStand.getCustomName() + "\n" + name));
+//                                                                }
+//                                                            }
+//                                                            armorStand.setCustomNameVisible(true);
+//
+//
+//                                                            // Add to client world
+//                                                            clientLevel.addFreshEntity(armorStand);
+//                                                        }
 
 
                                                         if (blockEntity instanceof ChestBlockEntity chest) {
@@ -150,7 +150,7 @@ public class SearchItemCommand {
                                                                     name + ": " + itemStackName_amount.get(name)
                                                             ));
                                                         }
-                                                        ContainerRenderer.container_displayItems.put(container, itemStack_amount);
+//                                                        ContainerRenderer.container_displayItems.put(container, itemStack_amount);
                                                     }
                                                 }
                                             }

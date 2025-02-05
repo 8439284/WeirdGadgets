@@ -2,8 +2,8 @@ package org.ajls.weirdgadgets.items.custom.searchitem;
 
 import org.ajls.weirdgadgets.advanced.SearchCompass;
 
-public class PeacockFanCompass extends SearchCompass {
-    public PeacockFanCompass(Properties properties) {
+public class PeacockFeatherFanCompass extends SearchCompass {
+    public PeacockFeatherFanCompass(Properties properties) {
         super(properties);
     }
 

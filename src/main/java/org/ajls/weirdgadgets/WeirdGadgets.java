@@ -106,6 +106,7 @@ public class WeirdGadgets {
             event.accept(EXAMPLE_BLOCK_ITEM);
             event.accept(ModItems.MOONWORM_QUEEN_COMPASS);
             event.accept(ModItems.PEACOCK_FEATHER_FAN_COMPASS);
+            event.accept(ModItems.MAZEBREAKER_PICKAXE_COMPASS);
         }
     }
 

@@ -6,8 +6,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.ajls.weirdgadgets.WeirdGadgets;
+import org.ajls.weirdgadgets.items.custom.searchitem.MazebreakerPickaxeCompass;
 import org.ajls.weirdgadgets.items.custom.searchitem.MoonwormQueenCompassNew;
-import org.ajls.weirdgadgets.items.custom.searchitem.PeacockFanCompass;
+import org.ajls.weirdgadgets.items.custom.searchitem.PeacockFeatherFanCompass;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,WeirdGadgets.MODID);
@@ -22,7 +23,9 @@ public class ModItems {
     public static final RegistryObject<Item> MOONWORM_QUEEN_COMPASS = ITEMS.register("moonworm_queen_compass",
             () -> new MoonwormQueenCompassNew(new Item.Properties()));
     public static final RegistryObject<Item> PEACOCK_FEATHER_FAN_COMPASS = ITEMS.register("peacock_feather_fan_compass",
-            () -> new PeacockFanCompass(new Item.Properties()));
+            () -> new PeacockFeatherFanCompass(new Item.Properties()));
+    public static final RegistryObject<Item> MAZEBREAKER_PICKAXE_COMPASS = ITEMS.register("mazebreaker_pickaxe_compass",
+            () -> new MazebreakerPickaxeCompass(new Item.Properties()));
 
 
     public static void register(IEventBus eventBus) {

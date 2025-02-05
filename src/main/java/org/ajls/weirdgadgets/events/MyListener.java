@@ -33,16 +33,18 @@ public class MyListener {
 //        }
         Entity entity = event.getEntity();
         if (entity instanceof Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 10, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 10, 0, true, true));
+            int duration = 10*20;
+            //  levitation instant damage
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.WITHER, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, duration, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, duration, 0, true, true));
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 10, 0));
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 10, 0));
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 0));

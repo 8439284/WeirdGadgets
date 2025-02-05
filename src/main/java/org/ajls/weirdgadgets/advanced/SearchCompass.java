@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nonnull;
 
 public class SearchCompass extends Item {
-    private int SEARCH_RADIUS = 50; // Radius around the player to search for chests
+    int SEARCH_RADIUS = 100; // Radius around the player to search for chests  //original 50
     String namespace;
     String path;
 

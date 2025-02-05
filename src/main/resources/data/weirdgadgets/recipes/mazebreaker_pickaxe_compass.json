@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "#A#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "twilightforest:steeleaf_ingot"
+    },
+    "A": {
+      "item": "minecraft:compass"
+    }
+  },
+  "result": {
+    "item": "weirdgadgets:mazebreaker_pickaxe_compass"
+  }
+}

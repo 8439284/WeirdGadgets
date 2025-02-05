@@ -1,5 +1,6 @@
 {
   "itemGroup.weirdgadgets": "Example Mod Tab",
   "item.weirdgadgets.moonworm_queen_compass": "Moonmorm Queen Compass",
-  "item.weirdgadgets.peacock_feather_fan_compass": "Peacock Feather Fan Compass"
+  "item.weirdgadgets.peacock_feather_fan_compass": "Peacock Feather Fan Compass",
+  "item.weirdgadgets.mazebreaker_pickaxe_compass": "Mazebreaker Compass"
 }
